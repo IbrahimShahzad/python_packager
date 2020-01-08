@@ -30,13 +30,13 @@ def package(dir):
     print("All files zipped successfully!")
 
 def write_requirements(dir):
-    os.system('pip freeze > requirements.txt')
+    os.system('python3 -m pip freeze > requirements.txt')
 
 def download_packages(dir):
     print("creating downloads directory")
     os.system('mkdir downloads >/dev/null 2>&1')
     print("downloading packages")
-    os.system('pip-download -r requirements.txt -d ./downloads >/dev/null 2>&1')
+    os.system('python3 -m pip download -r requirements.txt -d ./downloads >/dev/null 2>&1')
     print("DONE. Please see requirements.txt for package details")
 
 def print_help():
