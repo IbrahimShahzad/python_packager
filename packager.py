@@ -183,7 +183,7 @@ def main():
         install_packages_tar(main_dir)
        
         print("Installing packages")
-        #install_packages_whl(main_dir)
+        install_packages_whl(main_dir)
     
     elif sys.argv[position] == '-t':
         print("---TEST ")
