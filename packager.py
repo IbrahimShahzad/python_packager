@@ -49,7 +49,7 @@ def package(dir):
 def install_packages_whl(dir):
     """ install whl packages """
     os.chdir(f'{dir}/extracted_packages/whl/')
-    os.system(f'python3.8 -m pip3 install *.whl')
+    os.system(f'python3.8 -m pip install *.whl')
 
 def install_packages_tar(dir):
     """ install tar.gz packages """
@@ -70,7 +70,7 @@ def install_packages_tar(dir):
                 return 1 
             print(f"Installing {new_dir}")
             os.chdir(f'{dir}/{new_dir}')
-            os.system(f'python3.8 -m pip3 install .')
+            os.system(f'python3.8 -m pip install .')
             os.chdir(f'{dir}/extracted_packages/gz/')
             cnt += 1
     print("DONE!!") 
@@ -78,14 +78,14 @@ def install_packages_tar(dir):
 
 def write_requirements(dir):
     """ write pip packages to requirements.txt """
-    os.system('python3.8 -m pip3 freeze > requirements.txt')
+    os.system('python3.8 -m pip freeze > requirements.txt')
 
 def download_packages(dir):
     """ download pip packages reading requirements.txt """
     print("creating downloads directory")
     os.system('mkdir downloads >/dev/null 2>&1')
     print("downloading packages")
-    os.system('python3.8 -m pip3 download -r requirements.txt -d ./downloads >/dev/null 2>&1')
+    os.system('python3.8 -m pip download -r requirements.txt -d ./downloads >/dev/null 2>&1')
     print("DONE. Please see requirements.txt for package details")
 
 def print_help():
