@@ -3,6 +3,7 @@ import sys
 from zipfile import ZipFile
 
 def create_install_list_gz(dir):
+    """ Installs insall list for tar.gz files """
     print("----tar.gz files------")
     os.chdir(f'{dir}/downloads/')
     for file_name in glob.glob('*.gz'):
@@ -12,6 +13,7 @@ def create_install_list_gz(dir):
             print(f"extracted_packages/gz/{file_name}")
 
 def create_install_list_whl(dir):
+    """ Installs insall list for whl files """
     print("----whl files------")
     os.chdir(f'{dir}/downloads/')
     for file_name in glob.glob('*.whl'):
@@ -23,6 +25,7 @@ def create_install_list_whl(dir):
 
 
 def package(dir):
+    """ Packages tar.gz and whl files + create install list """
     # printing the list of all files to be zipped
     print('files in downoads directory  will be zipped: ')
     create_install_list_gz(dir)
@@ -44,10 +47,12 @@ def package(dir):
 
 
 def install_packages_whl(dir):
+    """ install whl packages """
     os.chdir(f'{dir}/extracted_packages/whl/')
-    os.system(f'python3 -m pip install *.whl')
+    os.system(f'pip3 install *.whl')
 
 def install_packages_tar(dir):
+    """ install tar.gz packages """
     file_name = []
     os.chdir(f'{dir}/extracted_packages/gz/')
     print("im here")
@@ -65,23 +70,26 @@ def install_packages_tar(dir):
                 return 1 
             print(f"Installing {new_dir}")
             os.chdir(f'{dir}/{new_dir}')
-            os.system(f'python3 -m pip install .')
+            os.system(f'pip3 install .')
             os.chdir(f'{dir}/extracted_packages/gz/')
             cnt += 1
     print("DONE!!") 
 
 
 def write_requirements(dir):
-    os.system('python3 -m pip freeze > requirements.txt')
+    """ write pip packages to requirements.txt """
+    os.system('pip3 freeze > requirements.txt')
 
 def download_packages(dir):
+    """ download pip packages reading requirements.txt """
     print("creating downloads directory")
     os.system('mkdir downloads >/dev/null 2>&1')
     print("downloading packages")
-    os.system('python3 -m pip download -r requirements.txt -d ./downloads >/dev/null 2>&1')
+    os.system('pip3 download -r requirements.txt -d ./downloads >/dev/null 2>&1')
     print("DONE. Please see requirements.txt for package details")
 
 def print_help():
+    """ prints command line help """
     print('''
             command:
                 python packager.py [option]
@@ -98,6 +106,7 @@ def print_help():
     pass
 
 def unzip_gz_packages(dir):
+    """ Unzip tar.gz packages """
     print("creating directory")
     os.system(f'mkdir {dir}/extracted_packages/gz >/dev/null 2>&1')
     with ZipFile(f'{dir}/python_gz_packages.zip','r') as zipObj:
@@ -105,6 +114,7 @@ def unzip_gz_packages(dir):
     print(f"Extracted in -TARGET_DIR={dir}/extracted_packages/gz")
 
 def unzip_whl_packages(dir):
+    """ Unzip whl packages """
     print("creating directory")
     os.system(f'mkdir {dir}/extracted_packages/whl >/dev/null 2>&1')
     with ZipFile(f'{dir}/python_whl_packages.zip','r') as zipObj:
@@ -112,6 +122,7 @@ def unzip_whl_packages(dir):
     print(f"Extracted in -TARGET_DIR={dir}/extracted_packages/whl")
 
 def unzip_main(dir):
+    """ Unzip main tar.gz file """
     print("creating directory")
     os.system(f'mkdir {dir}/extracted_packages >/dev/null 2>&1')
     with ZipFile(f'{dir}/python_packages.zip','r') as zipObj:
@@ -119,11 +130,13 @@ def unzip_main(dir):
     print(f"Extracted in -TARGET_DIR={dir}/extracted_packages")
 
 def invalid():
+    """ print out in case of invalid arguments """
     print('Invalid number of Arguments... Exiting!')
     print_help()
     sys.exit()
 
 def main():
+    """ main method """
     arguments = len(sys.argv) -1
     #output argument-wise
     position = 1
